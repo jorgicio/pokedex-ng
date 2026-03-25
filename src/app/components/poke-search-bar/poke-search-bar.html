@@ -1,0 +1,7 @@
+<div class="card flex flex-wrap justify-center items-end gap-4">
+    <p-floatlabel variant="on" >
+        <input pInputText pSize="large" type="text" id="search" [(ngModel)]="searchValue" autocomplete="off" />
+        <label for="search">Busque su pokémon</label>
+        <p-button label="Buscar" (onClick)="onSearch()" [raised]="true"></p-button>
+    </p-floatlabel>
+</div>
