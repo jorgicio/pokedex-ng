@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { PokeSearchBar } from "./components/poke-search-bar/poke-search-bar";
-import { PokeInfo } from "./poke-info/poke-info";
+import { PokeInfo } from "./components/poke-info/poke-info";
 
 @Component({
   selector: 'app-root',

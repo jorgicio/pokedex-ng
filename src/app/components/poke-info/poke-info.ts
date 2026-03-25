@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { PokeQuery } from '../services/poke-query';
+import { PokeQuery } from '../../services/poke-query';
 
 @Component({
   selector: 'app-poke-info',
