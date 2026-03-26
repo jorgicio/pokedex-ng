@@ -1,13 +1,79 @@
 @if (isLoading()) {
-    <p>Cargando...</p>
+    <p>Loading...</p>
 }
 
 @if(pokemon()) {
-    <div>
-        <h2>{{ pokemon().name }}</h2>
-        <img [src]="pokemon().sprites.front_default" />
-        <p>Peso: {{ pokemon().weight }}</p>
+    <h1>{{ pokemon().name }}</h1>
+    <div class="grid grid-cols-4 gap-4">
+        <div class="col-span-2">
+            <div>
+                <img [src]="pokemon().sprites.front_default" />   
+            </div>
+            <div>
+                @for(poke of pokemon().types; track poke.type) {
+                    {{ poke.type.name }}
+                }           
+            </div>
+            <div>
+                Strong against:
+                @for(type of pokemonTypes(); track type.double_damage_to) {
+                    @for(f of type.double_damage_to; track f.name) {
+                        {{ f.name }}
+                    }
+                }
+            </div>
+            <div>
+                Weak against:
+               @for(type of pokemonTypes(); track type.double_damage_from) {
+                    @for(d of type.double_damage_from; track d.name) {
+                        {{ d.name }}
+                    }
+                } 
+            </div>
+            <div>
+                <p>Weight: {{ pokemon().weight }}</p>
+                <p>Height: {{ pokemon().height }}</p>
+            </div>
+            <div>
+                <audio controls>
+                    <source [src]="pokemon().cries.latest" type="audio/ogg">
+                    Tu navegador no es compatible con un reproductor de audio.
+                </audio>
+            </div>
+        </div>
+        <div class="col-span-2">
+            <div>
+                Abilities:
+                @for(poke of pokemon().abilities; track poke.ability) {
+                    {{ poke.ability.name }}
+                }
+            </div>
+            <div class="card">
+                <p-chart type="radar" [data]="statsData()"></p-chart>
+            </div>
+            <div>
+                @if(pokeEvol()) {
+                    @if(pokeEvol().evolvesFrom) {
+                        This pokemon evolves from {{ pokeEvol().evolvesFrom }}
+                    } @else {
+                        This pokemon does not evolve from another one.
+                    }
+                    @if(!pokeEvol().evolvesTo.length) {
+                        This pokemon does not evolve into another one.
+                    } @else {
+                        This pokemon evolves into
+                        @for(evol of pokeEvol().evolvesTo; track evol) {
+                            {{ evol }}
+                        }
+                    }
+                }
+            </div>
+        </div>
     </div>
+} @else {
+    <p-dialog header="Pokémon no encontrado" [modal]="true" [(visible)]="visible">
+        Pokémon no
+    </p-dialog>
 }
 
 

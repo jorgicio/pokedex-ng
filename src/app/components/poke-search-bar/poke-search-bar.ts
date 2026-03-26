@@ -5,7 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { ButtonModule } from 'primeng/button';
-import { PokeQuery } from '../../services/poke-query';
+import { PokeQuery } from '../../services/poke-query/poke-query';
 
 @Component({
   selector: 'app-poke-search-bar',
