@@ -8,7 +8,6 @@ import { PokeEvolProcessor } from '../poke-evol-processor/poke-evol-processor';
   providedIn: 'root',
 })
 export class PokeQuery {
-  private apiUrl = 'https://pokeapi.co/api/v2';
 
   pokemonResult = signal<any>(null);
   typesResult = signal<any>(null);
@@ -17,32 +16,35 @@ export class PokeQuery {
   constructor(private pokeEvolProcessor: PokeEvolProcessor) {}
 
   search(name: string) {
+
     this.isLoading.set(true);
     let typesList: any[] = [];
 
-    axios.get(`${this.apiUrl}/pokemon/${name.toLowerCase()}`)
-    .then(response => {
-      this.pokemonResult.set(response.data);
-      response.data.types.map((type: any) => {
-        axios.get(type.type.url)
+    const pokeApiURL = 'https://pokeapi.co/api/v2';
+    
+    axios.get(`${pokeApiURL}/pokemon/${name}`)
+      .then((data) => {
+        this.pokemonResult.set(data.data)
+        data.data.types.map((type: any) => {
+        axios.get(`${pokeApiURL}/type/${type.type.name}`)
         .then(response => {
           typesList.push(response.data.damage_relations)
         })
         this.typesResult.set(typesList);
-      })
-      axios.get(response.data.species.url)
-      .then(response2 => {
-        axios.get(response2.data.evolution_chain.url)
-        .then(response3 =>{
-          this.pokeEvolProcessor.evolutionProcessor(response.data.name,response2.data,response3.data);
+        axios.get(`${pokeApiURL}/pokemon-species/${data.data.name}`)
+        .then((data2) => {        
+          axios.get(data2.data.evolution_chain.url)
+          .then(response => {
+            this.pokeEvolProcessor.evolutionProcessor(name,data2.data,response.data)
+          })
+          })
+          .catch(error => console.error(error))
         })
       })
-      
-    })
-    .catch(() => this.pokemonResult.set(null))
-    .finally(() => this.isLoading.set(false))
-  }
-  
-  
+      .catch(() => {
+        this.pokemonResult.set(null);
+      })
+      .finally(() => this.isLoading.set(false));
 
+  }
 }

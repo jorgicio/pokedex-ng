@@ -1,0 +1,80 @@
+#pokepicture {
+    background-color: whitesmoke;
+}
+
+#pokename{
+    color: yellowgreen;
+}
+
+
+.type-normal {
+    background-color: gray;
+}
+
+.type-fire {
+    background-color: red;
+}
+
+.type-water {
+    background-color: turquoise;
+}
+
+.type-grass {
+    background-color: greenyellow;
+}
+
+.type-electric {
+    background-color: yellow;
+}
+
+.type-ice {
+    background-color: paleturquoise;
+}
+
+.type-fighting {
+    background-color: rgb(137, 13, 38);
+}
+
+.type-poison {
+    background-color: purple;
+}
+
+.type-ground {
+    background-color: brown;
+}
+
+.type-flying {
+    background-color: lightblue;
+}
+
+.type-psychic {
+    background-color: rgb(213, 82, 126);
+}
+
+.type-bug {
+    background-color: teal;
+}
+
+.type-rock {
+    background-color: grey;
+}
+
+.type-ghost {
+    background-color: blueviolet;
+}
+
+.type-dragon {
+    background-color: lightsalmon;
+}
+
+.type-dark {
+    background-color: black;
+}
+
+.type-steel {
+    background-color: lightgray;
+}
+
+.type-fairy {
+    background-color: lightcoral;
+}

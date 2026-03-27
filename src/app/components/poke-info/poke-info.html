@@ -3,36 +3,68 @@
 }
 
 @if(pokemon()) {
-    <h1>{{ pokemon().name }}</h1>
     <div class="grid grid-cols-4 gap-4">
-        <div class="col-span-2">
-            <div>
-                <img [src]="pokemon().sprites.front_default" />   
+        <div class="col-span-2 p-10">
+            <div id="pokename" class="text-3xl">{{ pokemon().name | capitalize }}</div>
+            <div id="pokepicture" class="w-xs m-4 border rounded-sm">
+                <img [src]="pokemon().sprites.front_default" width="400px" />   
             </div>
-            <div>
+            <div class="p-2">
                 @for(poke of pokemon().types; track poke.type) {
-                    {{ poke.type.name }}
+                    <p-chip class="uppercase gap-2 border border-zinc-200 border-solid text-shadow-lg" 
+                    [ngClass]="getPokemonType(poke.type.name)" [label]="poke.type.name"></p-chip>    
                 }           
             </div>
             <div>
                 Strong against:
                 @for(type of pokemonTypes(); track type.double_damage_to) {
-                    @for(f of type.double_damage_to; track f.name) {
-                        {{ f.name }}
-                    }
+                    @if(!type.double_damage_to.length) {
+                        None
+                    } @else {
+                        @for(f of type.double_damage_to; track f.name) {
+                            {{ f.name | capitalize }},
+                        }
+                    }                  
                 }
             </div>
             <div>
                 Weak against:
                @for(type of pokemonTypes(); track type.double_damage_from) {
-                    @for(d of type.double_damage_from; track d.name) {
-                        {{ d.name }}
-                    }
+                    @if(!type.double_damage_from.length) {
+                        None
+                    } @else {
+                        @for(d of type.double_damage_from; track d.name) {
+                            {{ d.name | capitalize }},
+                        }
+                    }                  
                 } 
             </div>
             <div>
-                <p>Weight: {{ pokemon().weight }}</p>
-                <p>Height: {{ pokemon().height }}</p>
+                <p>Weight: {{ pokemon().weight }} lbs</p>
+                <p>Height: {{ pokemon().height }} in</p>
+            </div>
+            <div>
+                Abilities:
+                @for(poke of pokemon().abilities; track poke.ability) {
+                    {{ poke.ability.name | capitalize }},
+                }
+            </div>
+            <div>
+                @if(pokeEvol()) {
+                    @if(pokeEvol().evolvesFrom) {
+                        <p>This pokemon evolves from {{ pokeEvol().evolvesFrom | capitalize }}</p>
+                    } @else {
+                        <p>This pokemon does not evolve from another one.</p> 
+                    }
+                    @if(!pokeEvol().evolvesTo.length) {
+                        <p>This pokemon does not evolve into another one.</p>
+                    } @else {
+                        <p>This pokemon evolves into
+                        @for(evol of pokeEvol().evolvesTo; track evol) {
+                            {{ evol }},
+                        }</p>
+                    }
+                }
             </div>
             <div>
                 <audio controls>
@@ -41,33 +73,11 @@
                 </audio>
             </div>
         </div>
-        <div class="col-span-2">
-            <div>
-                Abilities:
-                @for(poke of pokemon().abilities; track poke.ability) {
-                    {{ poke.ability.name }}
-                }
-            </div>
+        <div class="col-span-2 p-10">    
             <div class="card">
                 <p-chart type="radar" [data]="statsData()"></p-chart>
             </div>
-            <div>
-                @if(pokeEvol()) {
-                    @if(pokeEvol().evolvesFrom) {
-                        This pokemon evolves from {{ pokeEvol().evolvesFrom }}
-                    } @else {
-                        This pokemon does not evolve from another one.
-                    }
-                    @if(!pokeEvol().evolvesTo.length) {
-                        This pokemon does not evolve into another one.
-                    } @else {
-                        This pokemon evolves into
-                        @for(evol of pokeEvol().evolvesTo; track evol) {
-                            {{ evol }}
-                        }
-                    }
-                }
-            </div>
+            
         </div>
     </div>
 } @else {

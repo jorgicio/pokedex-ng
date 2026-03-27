@@ -8,6 +8,10 @@
 html {
     background-color: #eef0ed;
     font-family: Arial, Helvetica, sans-serif;
-    color:brown;
 }/* You can add global styles to this file, and also import other style files */
 /* You can add global styles to this file, and also import other style files */
+
+#pokedex {
+    background-color: #d32b2b;
+    color: #eef0ed;
+}

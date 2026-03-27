@@ -11,7 +11,6 @@ export class PokeEvolProcessor {
   evolution = signal<any>(null);
 
   evolutionProcessor(name: string, species: any, evolChain: any) {
-
     let evolvesFrom = (species.evolves_from_species) ? species.evolves_from_species?.name : null;
     let evolvesToArray = evolChain.chain.evolves_to;
     let evolvesTo = evolvesToArray.map((e:any) => {
@@ -24,11 +23,11 @@ export class PokeEvolProcessor {
     
     this.evolution.set({
       "evolvesFrom": evolvesFrom,
-      "evolvesTo": evolvesTo
+      "evolvesTo":  evolvesTo
     })
     
   }
-  
+
 }
 
 
